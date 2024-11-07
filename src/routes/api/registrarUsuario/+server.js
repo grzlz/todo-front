@@ -1,7 +1,7 @@
 import bcrypt from 'bcryptjs';
 
 export async function POST({ request }) {
-    const { nombre, apellido, correo_electronico, contraseña } = await request.json();
+    const { nombre, apellido, correo_electronico, password } = await request.json();
 
     try {
         // Paso 1: Verificar que el username y el email no estén registrados
@@ -25,7 +25,7 @@ export async function POST({ request }) {
         }
 
         // Paso 2: Encriptar la contraseña
-        const hashedPassword = await bcrypt.hash(contraseña, 10);
+        const hashedPassword = await bcrypt.hash(password, 10);
 
         // Paso 3: Registrar el usuario en la API de AWS
         let registerResponse = await fetch('http://13.58.249.92:8000/registrarUsuario', {
@@ -33,7 +33,7 @@ export async function POST({ request }) {
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify({ nombre, apellido, correo_electronico, contraseña: hashedPassword })
+            body: JSON.stringify({ nombre, apellido, correo_electronico, password: hashedPassword })
         });
 
         if (!registerResponse.ok) {
