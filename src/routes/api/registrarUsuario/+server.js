@@ -1,7 +1,7 @@
 import bcrypt from 'bcryptjs';
 
 export async function POST({ request }) {
-    const { nombre, apellido, correo_electronico, password } = await request.json();
+    const { nombre, apellido, correo, password } = await request.json();
 
     try {
         // Paso 1: Verificar que el username y el email no estén registrados
@@ -10,7 +10,7 @@ export async function POST({ request }) {
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify({ correo_electronico })
+            body: JSON.stringify({ correo })
         });
 
         if (!checkResponse.ok) {
@@ -33,7 +33,7 @@ export async function POST({ request }) {
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify({ nombre, apellido, correo_electronico, password: hashedPassword })
+            body: JSON.stringify({ nombre, apellido, correo, password: hashedPassword })
         });
 
         if (!registerResponse.ok) {
