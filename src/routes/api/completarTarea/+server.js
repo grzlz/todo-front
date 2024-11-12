@@ -1,24 +1,27 @@
-import pkg from 'pg'
-const { Pool } = pkg
+export async function POST({ request }) {
+    const { completado, id } = await request.json();
 
-const pool = new Pool({
-    user: 'postgres',
-    host: 'localhost',
-    database: 'postgres',
-    password: 'shalashala',
-    port: 5432
-})
+    try {
+        // Hacer la solicitud POST al API en la instancia de AWS
+        let response = await fetch('http://13.58.249.92:8000/completarTarea', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ completado, id })
+        });
 
-export async function POST({request}) {
-    let frontData = await request.json()
+        // Verificar si la solicitud fue exitosa
+        if (!response.ok) {
+            throw new Error('Error al actualizar la tarea desde el API externo');
+        }
 
-    const client = await pool.connect()
+        // Retornar la respuesta del API externo
+        let resultado = await response.json();
 
-    
-    const postQuery = `UPDATE tareas SET completado = $1 WHERE id=$2`
-    const values = [frontData.completado, frontData.id]
-    const result = await client.query(postQuery, values)
-
-    client.release()
-    return new Response('Todo bien', {status: 200})
+        return new Response(JSON.stringify(resultado), { status: 200 });
+    } catch (error) {
+        console.error('Error:', error);
+        return new Response(JSON.stringify({ error: error.message }), { status: 500 });
+    }
 }
