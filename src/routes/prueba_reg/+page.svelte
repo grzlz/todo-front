@@ -4,14 +4,14 @@
     // Variables para los campos del formulario
     let nombre = '';
     let apellido = '';
-    let correo_electronico = '';
+    let correo = '';
     let password = '';
     let mensaje = '';
 
     // Función para enviar la solicitud de registro
     async function registerUser() {
         try {
-            const response = await fetch('/api/local_registrarUsuario', {
+            const response = await fetch('/api/registrarUsuario', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -19,7 +19,7 @@
                 body: JSON.stringify({
                     nombre,
                     apellido,
-                    correo_electronico,
+                    correo,
                     password
                 })
             });
@@ -91,8 +91,8 @@
     <label for="apellido">Apellido:</label>
     <input id="apellido" bind:value={apellido} type="text" required />
 
-    <label for="correo_electronico">Correo Electrónico:</label>
-    <input id="correo_electronico" bind:value={correo_electronico} type="email" required />
+    <label for="correo">Correo Electrónico:</label>
+    <input id="correo" bind:value={correo} type="email" required />
 
     <label for="password">Contraseña:</label>
     <input id="password" bind:value={password} type="password" required />
