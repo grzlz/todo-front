@@ -25,7 +25,7 @@
         }
         if (warnings.length === 0) {
             try {
-                const response = await fetch('https://tu-api.com/registro', {
+                const response = await fetch('api/registrarUsuario', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
