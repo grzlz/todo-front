@@ -1,6 +1,7 @@
 
 export async function POST({ request }) {
     const { nombre, apellido, correo, password } = await request.json();
+    console.log('Datos recibidos:', { nombre, apellido, correo, password });
 
     try {
         // Paso 1: Verificar que el username y el email no estén registrados

@@ -2,7 +2,7 @@
     let nombre = "";
     let apellido = "";
     let correo = "";
-    let contra = "";
+    let password = "";
     let warnings = [];
 
     let emailregex = /^\w+([\.-]?\w+)@\w+([\.-]?\w+)(\.\w{2,3})+$/;
@@ -17,12 +17,6 @@
         if (apellido.length === 0) {
             warnings.push("No ha puesto su apellido");
         }
-        if (!emailregex.test(correo)) {
-            warnings.push("El correo no es válido");
-        }
-        if (!validacion.test(contra)) {
-            warnings.push("Su contraseña debe ser mayor a 6 carácteres y contener mayúsculas, minúsculas, números y símbolos");
-        }
         if (warnings.length === 0) {
             try {
                 const response = await fetch('api/registrarUsuario', {
@@ -34,7 +28,7 @@
                         nombre,
                         apellido,
                         correo,
-                        contra,
+                        password,
                     }),
                 });
 
@@ -58,7 +52,7 @@
         <input type="text" placeholder="Nombre" bind:value={nombre}>
         <input type="text" placeholder="Apellido" bind:value={apellido}>
         <input type="email" placeholder="Correo" bind:value={correo}>
-        <input type="password" placeholder="Contraseña" bind:value={contra}>
+        <input type="password" placeholder="Contraseña" bind:value={password}>
         <button on:click={registrar}>Registrar</button>
 
         <ul>
