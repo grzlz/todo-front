@@ -1,155 +1,157 @@
 <script>
-    import { onMount } from 'svelte'
-    let tarea = ""
-    let lista_de_tareas = [
-       
-    ]
-    onMount(() => {
-        obtenerDatos()
-    })
-    async function obtenerDatos(){
-       
-       
-        let response = await fetch('/api/obtenerDatos')
-        let datos = await response.json()
+    let nombre = "";
+    let apellido = "";
+    let correo = "";
+    let contra = "";
+    let warnings = [];
 
-        lista_de_tareas = datos
-    }
+    let emailregex = /^\w+([\.-]?\w+)@\w+([\.-]?\w+)(\.\w{2,3})+$/;
+    let validacion = /^(?=.\d)(?=.[a-z])(?=.*[A-Z]).{6,20}$/;
 
-
-   async function agregarTarea(){
-        if (tarea.length === 0) {
-            alert("Pusiste una tarea vacia")
-        } else {
-            let response = await fetch('/api/agregarTarea', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({
-                    nombre_tarea: tarea,
-                    completado: false
-                })
-            })
-
-
-
-           
-        }
-        obtenerDatos()
-    }
-    async function eliminarTarea(id){
-        let response = await fetch ('/api/eliminarTarea', {
-            method: 'DELETE',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-                body: JSON.stringify({
-                    id: id
-                })
-        })
-
-        obtenerDatos()
-    }
-    async function completarTarea(tarea) {
-        let response = await fetch ('/api/completarTarea', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-                body: JSON.stringify({
-                    id: tarea.id,
-                    completado: tarea.completado
-                })
-        })
+    async function registrar() {
+        warnings = [];
         
+        if (nombre.length === 0) {
+            warnings.push("No ha puesto su nombre");
+        }
+        if (apellido.length === 0) {
+            warnings.push("No ha puesto su apellido");
+        }
+        if (!emailregex.test(correo)) {
+            warnings.push("El correo no es válido");
+        }
+        if (!validacion.test(contra)) {
+            warnings.push("Su contraseña debe ser mayor a 6 carácteres y contener mayúsculas, minúsculas, números y símbolos");
+        }
+        if (warnings.length === 0) {
+            try {
+                const response = await fetch('https://tu-api.com/registro', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        nombre,
+                        apellido,
+                        correo,
+                        contra,
+                    }),
+                });
+
+                if (response.ok) {
+                    const result = await response.json();
+                    console.log('Registro exitoso:', result);
+                } else {
+                    console.error('Error en el registro');
+                }
+            } catch (error) {
+                console.error('Error en la solicitud HTTP:', error);
+            }
+        }
     }
-
-    let isChecked = false
-
 </script>
 
-
 <main>
+    <form>
+        <h1>Registro</h1>
 
+        <input type="text" placeholder="Nombre" bind:value={nombre}>
+        <input type="text" placeholder="Apellido" bind:value={apellido}>
+        <input type="email" placeholder="Correo" bind:value={correo}>
+        <input type="password" placeholder="Contraseña" bind:value={contra}>
+        <button on:click={registrar}>Registrar</button>
 
-<h1>
-    Lista de tareas
-</h1>
-<input type="text" placeholder="Escribe una tarea aqui" bind:value={tarea}>
-<button on:click={agregarTarea}>Agregar</button>
-<ul>
-    {#each lista_de_tareas as tarea, indice}
-    <li>
-        
-        <input type="checkbox" bind:checked={tarea.completado} on:change={() => completarTarea(tarea)}>
-
-        <span class:completado={tarea.completado}> {tarea.nombre_tarea}</span>
-       
-        <button style="background-color: red;" on:click={() => eliminarTarea(tarea.id)}>
-            Eliminar
-        </button>
-    </li>
-   
-    
-    {/each}
-</ul>
+        <ul>
+            {#each warnings as warning}
+            <li>{warning}</li>
+            {/each}
+        </ul>
+    </form>
 </main>
 
+<style>/* Estilo general para el formulario */
+main {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background: #f3e8ff; /* Fondo suave morado */
+    font-family: 'Arial', sans-serif;
+}
 
-<style>
-    main{
-        max-width: 400px;
-        margin: 0 auto;
-        padding: 1em;
-        text-align: center;
+/* Contenedor del formulario */
+form {
+    background-color: #ffffff;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 400px;
+    margin: 20px;
+    border: 2px solid #6a4c9c; /* Borde morado claro */
+}
+
+/* Título del formulario */
+h1 {
+    font-size: 2rem;
+    margin-bottom: 20px;
+    text-align: center;
+    color: #6a4c9c; /* Título en morado */
+}
+
+/* Estilo de los inputs */
+input {
+    width: 100%;
+    padding: 12px;
+    margin: 10px 0;
+    border: 1px solid #d4a5f7; /* Borde morado claro */
+    border-radius: 8px;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+    background-color: #f8f4fd; /* Fondo de input morado muy suave */
+}
+
+/* Estilo cuando un input está enfocado */
+input:focus {
+    border-color: #9b5de5; /* Morado oscuro cuando está enfocado */
+    outline: none;
+}
+
+/* Estilo del botón */
+button {
+    width: 100%;
+    padding: 12px;
+    background-color: #9b5de5; /* Morado en el botón */
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 1.1rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+/* Hover sobre el botón */
+button:hover {
+    background-color: #6a4c9c; /* Morado oscuro en hover */
+}
+
+/* Lista de advertencias */
+ul {
+    list-style-type: none;
+    padding: 0;
+    margin-top: 20px;
+    width: 100%;
+}
+
+ul li {
+    color: #e94e77; /* Rojo rosado para las advertencias */
+    font-size: 0.9rem;
+}
+
+/* Responsividad para pantallas pequeñas */
+@media (max-width: 480px) {
+    form {
+        width: 90%;
     }
-    
-    input[type="text"]{
-        width: calc()100% - 100px;
-        padding: 0.5rem;
-        margin-right: 0.5rem;
-    }
-
-    button {
-        padding: 0.5rem;
-        background-color: #6200ea;
-        color: white;
-        border: none;
-        cursor: pointer;
-        border-radius: 5px;
-
-    }
-
-    ul {
-        list-style-type: none;
-
-    }
-
-    li {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        padding: 0.5rem;
-    
-    }
-
-    .completado {
-        text-decoration: line-through;
-        color: grey;
-
-    }
-
-    button:hover{
-        background-color: #3700b3;
-    }
-
-    input[type="checkbox"]{
-        margin-right: 10px;
-    }
-
+}
 </style>
-
-
-
-
