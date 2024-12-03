@@ -3,15 +3,7 @@
 
     let tarea = "";
     let lista_de_tareas = [];
-
-    // Verificación de sesión
-    onMount(() => {
-        const userLoggedIn = localStorage.getItem('sessionToken');
-        if (!userLoggedIn) {
-            window.location.href = '/';
-        }
-    });
-
+    
     onMount(() => {
         obtenerDatos();
     });
@@ -65,12 +57,6 @@
             }),
         });
     }
-
-    // Función para cerrar sesión
-    async function CerrarSesion() {
-        localStorage.removeItem('sessionToken');
-        window.location.href = '/login.html'; // Redirige al login
-    }
 </script>
 
 <main>
@@ -78,8 +64,8 @@
     <header>
         <nav>
             <ul>
-                <li><a href="/Tareas" class="nav-button">Tareas</a></li>
-                <li><a href="/Analytics" class="nav-button">Analytics</a></li>
+                <li><a href="/tareas" class="nav-button">Tareas</a></li>
+                <li><a href="/analytics" class="nav-button">Analytics</a></li>
                 <li><button on:click={CerrarSesion} class="nav-button">Cerrar Sesión</button></li>
             </ul>
         </nav>
