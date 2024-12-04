@@ -1,3 +1,6 @@
+<<<<<<< HEAD
+<h1>INICIO DE SESIÓN</h1>
+=======
 <script>
   let email = '';
   let password = '';
@@ -196,3 +199,4 @@
     height: 100vh;
   }
 </style>
+>>>>>>> e536dce492c74790b43ee6e414a8d5037ef1c492
