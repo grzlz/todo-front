@@ -3,7 +3,7 @@
 
     let tarea = "";
     let lista_de_tareas = [];
-    
+
     onMount(() => {
         obtenerDatos();
     });
@@ -56,6 +56,12 @@
                 completado: tarea.completado,
             }),
         });
+    }
+
+    // Función para cerrar sesión
+    async function CerrarSesion() {
+        localStorage.removeItem('sessionToken');
+        window.location.href = '/login.html'; // Redirige al login
     }
 </script>
 
