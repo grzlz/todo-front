@@ -1,4 +1,5 @@
 <script>
+    import { goto } from '$app/navigation'; // Para manejar redirecciones en SvelteKit
     let nombre = "";
     let apellido = "";
     let correo = "";
@@ -35,6 +36,9 @@
                 if (response.ok) {
                     const result = await response.json();
                     console.log('Registro exitoso:', result);
+                    alert("Registro exitoso. Por favor, inicie sesión para continuar.");
+            goto('/login'); // Redirige tras el éxito
+
                 } else {
                     console.error('Error en el registro');
                 }
@@ -63,89 +67,97 @@
     </form>
 </main>
 
-<style>/* Estilo general para el formulario */
-main {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    background: #f3e8ff; /* Fondo suave morado */
-    font-family: 'Arial', sans-serif;
-}
-
-/* Contenedor del formulario */
-form {
-    background-color: #ffffff;
-    padding: 30px;
-    border-radius: 10px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-    width: 100%;
-    max-width: 400px;
-    margin: 20px;
-    border: 2px solid #6a4c9c; /* Borde morado claro */
-}
-
-/* Título del formulario */
-h1 {
-    font-size: 2rem;
-    margin-bottom: 20px;
-    text-align: center;
-    color: #6a4c9c; /* Título en morado */
-}
-
-/* Estilo de los inputs */
-input {
-    width: 100%;
-    padding: 12px;
-    margin: 10px 0;
-    border: 1px solid #d4a5f7; /* Borde morado claro */
-    border-radius: 8px;
-    font-size: 1rem;
-    transition: all 0.3s ease;
-    background-color: #f8f4fd; /* Fondo de input morado muy suave */
-}
-
-/* Estilo cuando un input está enfocado */
-input:focus {
-    border-color: #9b5de5; /* Morado oscuro cuando está enfocado */
-    outline: none;
-}
-
-/* Estilo del botón */
-button {
-    width: 100%;
-    padding: 12px;
-    background-color: #9b5de5; /* Morado en el botón */
-    color: white;
-    border: none;
-    border-radius: 8px;
-    font-size: 1.1rem;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-}
-
-/* Hover sobre el botón */
-button:hover {
-    background-color: #6a4c9c; /* Morado oscuro en hover */
-}
-
-/* Lista de advertencias */
-ul {
-    list-style-type: none;
-    padding: 0;
-    margin-top: 20px;
-    width: 100%;
-}
-
-ul li {
-    color: #e94e77; /* Rojo rosado para las advertencias */
-    font-size: 0.9rem;
-}
-
-/* Responsividad para pantallas pequeñas */
-@media (max-width: 480px) {
-    form {
-        width: 90%;
+<style>
+    /* Estilo general para centrar todo el contenido */
+    main {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        background: #f3e8ff; /* Fondo suave morado */
+        font-family: 'Arial', sans-serif;
+        margin: 0; /* Elimina márgenes */
+        padding: 0;
+        box-sizing: border-box; /* Asegura un mejor manejo del diseño */
     }
-}
-</style>
+    
+    /* Formulario centrado */
+    form {
+        background-color: #ffffff;
+        padding: 30px;
+        border-radius: 10px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        width: 100%;
+        max-width: 400px; /* Tamaño máximo del formulario */
+        display: flex;
+        flex-direction: column;
+        gap: 10px; /* Espaciado uniforme entre los elementos */
+        align-items: center; /* Centrar los elementos dentro del formulario */
+        border: 2px solid #6a4c9c; /* Borde morado claro */
+    }
+    
+    /* Título del formulario */
+    h1 {
+        font-size: 2rem;
+        margin-bottom: 20px;
+        text-align: center;
+        color: #6a4c9c; /* Título en morado */
+    }
+    
+    /* Inputs centrados */
+    input {
+        width: 100%;
+        padding: 12px;
+        margin: 10px 0;
+        border: 1px solid #d4a5f7; /* Borde morado claro */
+        border-radius: 8px;
+        font-size: 1rem;
+        transition: all 0.3s ease;
+        background-color: #f8f4fd; /* Fondo de input morado muy suave */
+    }
+    
+    /* Inputs enfocados */
+    input:focus {
+        border-color: #9b5de5; /* Morado oscuro cuando está enfocado */
+        outline: none;
+    }
+    
+    /* Botón de enviar */
+    button {
+        width: 100%;
+        padding: 12px;
+        background-color: #9b5de5; /* Botón morado */
+        color: white;
+        border: none;
+        border-radius: 8px;
+        font-size: 1.1rem;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+    }
+    
+    /* Hover del botón */
+    button:hover {
+        background-color: #6a4c9c; /* Botón morado oscuro al pasar el cursor */
+    }
+    
+    /* Lista de advertencias */
+    ul {
+        list-style-type: none;
+        padding: 0;
+        margin-top: 10px;
+        width: 100%;
+    }
+    
+    ul li {
+        color: #e94e77; /* Color rosado para advertencias */
+        font-size: 0.9rem;
+        text-align: left;
+    }
+    
+    /* Responsividad para pantallas pequeñas */
+    @media (max-width: 480px) {
+        form {
+            width: 90%; /* El formulario ocupa un 90% de la pantalla */
+        }
+    }
+    </style>
