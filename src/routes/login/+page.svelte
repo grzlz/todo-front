@@ -1,48 +1,51 @@
 <script>
-  let email = '';
-  let password = '';
-  let errorMessage = '';
-  let fieldErrors = { email: '', password: '' };
+    import { goto } from '$app/navigation'; // Importa la función goto
 
-  const validateFields = () => {
-    fieldErrors.email = '';
-    fieldErrors.password = '';
+    let email = '';
+    let password = '';
+    let errorMessage = '';
+    let fieldErrors = { email: '', password: '' };
 
-    if (!email.includes('@')) {
-      fieldErrors.email = 'Por favor, ingresa un correo electrónico válido.';
-    }
+    const validateFields = () => {
+      fieldErrors.email = '';
+      fieldErrors.password = '';
 
-    if (!password.trim()) {
-      fieldErrors.password = 'La contraseña no puede estar vacía.';
-    }
-
-    return !fieldErrors.email && !fieldErrors.password;
-  };
-
-  const handleSubmit = async () => {
-    if (!validateFields()) {
-      return;
-    }
-
-    try {
-      const response = await fetch('/login', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email, password }),
-      });
-
-      if (!response.ok) {
-        const error = await response.json();
-        errorMessage =
-          error.message || 'Error al autenticar. Por favor, inténtalo de nuevo.';
-      } else {
-        console.log('Inicio de sesión exitoso.');
-        errorMessage = '';
+      if (!email.includes('@')) {
+        fieldErrors.email = 'Por favor, ingresa un correo electrónico válido.';
       }
-    } catch (error) {
-      errorMessage = 'Hubo un problema al conectar con el servidor.';
-    }
-  };
+
+      if (!password.trim()) {
+        fieldErrors.password = 'La contraseña no puede estar vacía.';
+      }
+
+      return !fieldErrors.email && !fieldErrors.password;
+    };
+
+    const handleSubmit = async () => {
+      if (!validateFields()) {
+        return;
+      }
+
+      try {
+        const response = await fetch('/login', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ email, password }),
+        });
+
+        if (!response.ok) {
+          const error = await response.json();
+          errorMessage =
+            error.message || 'Error al autenticar. Por favor, inténtalo de nuevo.';
+        } else {
+          console.log('Inicio de sesión exitoso.');
+          errorMessage = '';
+          goto('/'); // Redirige a la página principal
+        }
+      } catch (error) {
+        errorMessage = 'Hubo un problema al conectar con el servidor.';
+      }
+    };
 </script>
 
 <main>
