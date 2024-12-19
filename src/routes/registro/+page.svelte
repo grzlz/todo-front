@@ -9,6 +9,9 @@
     let emailregex = /^\w+([\.-]?\w+)@\w+([\.-]?\w+)(\.\w{2,3})+$/;
     let validacion = /^(?=.\d)(?=.[a-z])(?=.*[A-Z]).{6,20}$/;
 
+    function redirALogin() {
+        goto('/login');
+    }
     async function registrar() {
         warnings = [];
         
@@ -58,6 +61,10 @@
         <input type="email" placeholder="Correo" bind:value={correo}>
         <input type="password" placeholder="Contraseña" bind:value={password}>
         <button on:click={registrar}>Registrar</button>
+        <div class="login-prompt">
+            <span class="login-text">¿Ya tienes una cuenta?</span>
+            <button on:click={redirALogin} class="btn btn-login">Iniciar Sesión</button>
+        </div>
 
         <ul>
             {#each warnings as warning}
@@ -139,6 +146,40 @@
     button:hover {
         background-color: #6a4c9c; /* Botón morado oscuro al pasar el cursor */
     }
+
+ 
+    .login-prompt {
+        margin-top: 16px; /* Espaciado entre el botón registrar y este bloque */
+        text-align: center; /* Centra el contenido */
+    }
+
+
+    .login-text {
+        display: block; 
+        font-size: 0.85rem; 
+        color: #555; 
+        margin-bottom: 8px; 
+    }
+
+
+    .btn-login {
+        display: inline-block; 
+        width: auto; 
+        padding: 4px; 
+        background-color: transparent; 
+        color: #9b5de5; 
+        font-size: 0.9rem; 
+        text-align: center; 
+        border: none; 
+        cursor: pointer;
+        transition: color 0.3s ease; 
+    }
+
+
+    .btn-login:hover {
+        color: #6a4c9c; 
+    }
+
     
     /* Lista de advertencias */
     ul {
