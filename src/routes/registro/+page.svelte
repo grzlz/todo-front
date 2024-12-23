@@ -10,6 +10,7 @@
     let validacion = /^(?=.\d)(?=.[a-z])(?=.*[A-Z]).{6,20}$/;
 
     function redirALogin() {
+        event.preventDefault();
         goto('/login');
     }
     async function registrar() {
