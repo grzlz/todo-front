@@ -6,6 +6,11 @@
     let errorMessage = '';
     let fieldErrors = { email: '', password: '' };
 
+    function redirARegistro() {
+        event.preventDefault();
+        goto('/registro');
+    }
+
     const validateFields = () => {
       fieldErrors.email = '';
       fieldErrors.password = '';
@@ -81,6 +86,10 @@
     </div>
 
     <button type="submit">Iniciar sesión</button>
+    <div class="registro-prompt">
+      <span class="registro-text">¿Aún no tienes una cuenta?</span>
+      <button on:click={redirARegistro} class="btn btn-registro">Registrarse</button>
+    </div>
 
     {#if errorMessage}
       <p>{errorMessage}</p>
@@ -180,6 +189,38 @@
   button:active {
     transform: scale(1);
   }
+
+  .login-prompt {
+        margin-top: 32px; 
+        text-align: center;
+    }
+
+
+    .login-text {
+        display: block; 
+        font-size: 0.85rem; 
+        color: #555; 
+        margin-bottom: 8px; 
+    }
+
+
+    .btn-login {
+        display: inline-block; 
+        width: auto; 
+        padding: 4px; 
+        background-color: transparent; 
+        color: #9b5de5; 
+        font-size: 0.9rem; 
+        text-align: center; 
+        border: none; 
+        cursor: pointer;
+        transition: color 0.3s ease; 
+    }
+
+
+    .btn-login:hover {
+        color: #6a4c9c; 
+    }
 
   p {
     font-size: 14px;
