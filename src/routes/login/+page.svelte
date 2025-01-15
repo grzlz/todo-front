@@ -6,7 +6,7 @@
     let errorMessage = '';
     let fieldErrors = { email: '', password: '' };
 
-    function redirARegistro() {
+    function redirARegistro(event) {
         event.preventDefault();
         goto('/registro');
     }
@@ -32,10 +32,10 @@
       }
 
       try {
-        const response = await fetch('/login', {
+        const response = await fetch('/api/login', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ email, password }),
+          body: JSON.stringify({ correo: email, password }),
         });
 
         if (!response.ok) {
@@ -45,7 +45,7 @@
         } else {
           console.log('Inicio de sesión exitoso.');
           errorMessage = '';
-          goto('/'); // Redirige a la página principal
+          goto('/tareas'); // Cambiar cuando la implementación de JWS esté lista
         }
       } catch (error) {
         errorMessage = 'Hubo un problema al conectar con el servidor.';
