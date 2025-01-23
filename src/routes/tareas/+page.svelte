@@ -57,12 +57,23 @@
             }),
         });
     }
-
-    // Función para cerrar sesión
     async function CerrarSesion() {
-        localStorage.removeItem('sessionToken');
-        window.location.href = '/login.html'; // Redirige al login
+    localStorage.removeItem('sessionToken');
+    window.location.href = "/login"; // Redirige al login
+}
+
+async function ConfirmarCerrar() {
+    let respuesta = confirm("¿Estás seguro de que deseas cerrar sesión?");
+    if (respuesta) { 
+        // Si el usuario hace clic en "Aceptar" (true)
+        CerrarSesion(); 
+    } else { 
+        // Si el usuario hace clic en "Cancelar" (false)
+        console.log("El usuario ha cancelado el cierre de sesión.");
     }
+}
+
+
 </script>
 
 <main>
@@ -72,7 +83,7 @@
             <ul>
                 <li><a href="/tareas" class="nav-button">Tareas</a></li>
                 <li><a href="/analytics" class="nav-button">Analytics</a></li>
-                <li><button on:click={CerrarSesion} class="nav-button">Cerrar Sesión</button></li>
+                <li><button on:click={ConfirmarCerrar} class="nav-button">Cerrar Sesión</button></li>
             </ul>
         </nav>
     </header>
