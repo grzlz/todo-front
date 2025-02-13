@@ -7,10 +7,10 @@
         // Verificar si existe un token
         //if (token) {
             // Redirigir a la página de tareas si existe un token
-            goto('/tareas');
+            //goto('/tareas');
         //} else {
             // Redirigir a la página de login si no existe un token
-            //goto('/login');
+            goto('/login');
         //}
     });
 </script>
