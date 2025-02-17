@@ -44,7 +44,10 @@
             error.message || 'Error al autenticar. Por favor, inténtalo de nuevo.';
         } else {
           console.log('Inicio de sesión exitoso.');
-          errorMessage = '';
+          const { token } = await response.json();
+          console.log('Token:', token);
+			    sessionStorage.setItem('token', token);
+          
           goto('/tareas'); // Cambiar cuando la implementación de JWS esté lista
         }
       } catch (error) {
