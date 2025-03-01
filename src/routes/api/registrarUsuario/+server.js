@@ -5,7 +5,7 @@ export async function POST({ request }) {
 
     try {
         // Paso 1: Verificar que el username y el email no estén registrados
-        let checkResponse = await fetch('http://13.58.249.92:8000/verificarUsuario', {
+        let checkResponse = await fetch('http://18.227.26.255:8000/verificarUsuario', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
