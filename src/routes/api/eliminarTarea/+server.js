@@ -18,7 +18,7 @@ export async function DELETE({ request }) {
 
         // Extraer datos de la solicitud
         const frontData = await request.json(); // Datos enviados desde el frontend
-        const response = await fetch('http://13.58.249.92:8000/eliminarTarea', {
+        const response = await fetch('http://18.227.26.255:8000/eliminarTarea', {
             method: 'DELETE',
             headers: {
                 'Content-Type': 'application/json'
