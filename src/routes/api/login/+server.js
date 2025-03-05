@@ -22,7 +22,7 @@ export async function POST({ request }) {
         }
 
         // Paso 2: Extraer información del usuario autenticado
-        const { id } = await authResponse.json();
+        const { userId } = await authResponse.json();
 
         // Paso 3: Generar el JWT
         const token = jwt.sign(
