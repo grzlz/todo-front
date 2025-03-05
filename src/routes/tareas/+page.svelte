@@ -58,10 +58,13 @@
         });
     }
 
-    // Función para cerrar sesión
+    // Función para cerrar sesión con confirmación
     async function CerrarSesion() {
-        localStorage.removeItem('sessionToken');
-        window.location.href = '/login.html'; // Redirige al login
+        const confirmar = window.confirm("¿Estás seguro de que deseas cerrar sesión?");
+        if (confirmar) {
+            localStorage.removeItem('sessionToken');
+            window.location.href = '/login.html'; // Redirige al login
+        }
     }
 </script>
 
