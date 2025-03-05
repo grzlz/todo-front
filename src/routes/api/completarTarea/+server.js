@@ -19,7 +19,7 @@ export async function POST({ request }) {
         // Si el token es válido, procesar la lógica de la API
         const { completado, id } = await request.json();
 
-        let response = await fetch('http://13.58.249.92:8000/completarTarea', {
+        let response = await fetch('http://18.227.26.255:8000/completarTarea', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ completado, id })

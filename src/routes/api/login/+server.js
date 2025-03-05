@@ -7,7 +7,7 @@ export async function POST({ request }) {
 
     try {
         // Paso 1: Autenticar al usuario con la API existente
-        const authResponse = await fetch('http://13.58.249.92:8000/autenticarUsuario', {
+        const authResponse = await fetch('http://18.227.26.255:8000/autenticarUsuario', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ correo, password })
