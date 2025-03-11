@@ -26,7 +26,7 @@ export async function POST({ request }) {
 
 
         // Paso 2: Registrar el usuario en la API de AWS
-        let registerResponse = await fetch('http://13.58.249.92:8000/registrarUsuario', {
+        let registerResponse = await fetch('http://18.227.26.255:8000/registrarUsuario', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
