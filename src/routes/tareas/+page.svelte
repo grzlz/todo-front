@@ -63,7 +63,7 @@
         const confirmar = window.confirm("¿Estás seguro de que deseas cerrar sesión?");
         if (confirmar) {
             localStorage.removeItem('sessionToken');
-            window.location.href = '/login.html'; // Redirige al login
+            window.location.href = '/login'; // Redirige al login
         }
     }
 </script>
