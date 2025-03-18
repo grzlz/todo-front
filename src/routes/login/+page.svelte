@@ -26,25 +26,21 @@
       return;
     }
 
-      try {
-        const response = await fetch('/api/autenticarUsuario', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ correo: email, password }),
-        });
+    try {
+      const response = await fetch('/login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email, password }),
+      });
 
-        if (!response.ok) {
-          const error = await response.json();
-          errorMessage =
-            error.message || 'Error al autenticar. Por favor, inténtalo de nuevo.';
-        } else {
-          console.log('Inicio de sesión exitoso.');
-          const { token } = await response.json();
-          console.log('Token:', token);
-			    sessionStorage.setItem('token', token);
-          
-          goto('/tareas'); // Cambiar cuando la implementación de JWS esté lista
-        }
+      if (!response.ok) {
+        const error = await response.json();
+        errorMessage =
+          error.message || 'Error al autenticar. Por favor, inténtalo de nuevo.';
+      } else {
+        console.log('Inicio de sesión exitoso.');
+        errorMessage = '';
+        goto('/');
       }
     } catch (error) {
       errorMessage = 'Hubo un problema al conectar con el servidor.';
